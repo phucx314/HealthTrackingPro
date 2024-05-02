@@ -1,7 +1,6 @@
-import 'package:app3/pages/signup.dart';
+import 'package:app3/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../pages/recipes.dart';
 import 'signup_or_login.dart';
 
 class AuthGate extends StatelessWidget {
@@ -15,7 +14,7 @@ class AuthGate extends StatelessWidget {
         builder: (context, snapshot) {
           //user is logged in
           if (snapshot.hasData) {
-            return const RecipePage();
+            return const HomePage();
           }
           //user is not logged in
           else {

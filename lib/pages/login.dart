@@ -29,18 +29,24 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen size
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: const Color(0xFFE9F0F5),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 50),
+            SizedBox(height: screenSize.height * 0.05),
             Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: EdgeInsets.all(screenSize.width * 0.05),
               child: Container(
-                padding: const EdgeInsets.fromLTRB(
-                    10, 10, 5, 10), // Adjusted padding
+                padding: EdgeInsets.fromLTRB(
+                    screenSize.width * 0.02,
+                    screenSize.width * 0.02,
+                    screenSize.width * 0.01,
+                    screenSize.width * 0.02),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -48,18 +54,18 @@ class Login extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const MyButton(
+                    MyButton(
                       onTap: null,
                       title: "Sign in",
-                      width: 160,
+                      width: screenSize.width * 0.4,
                       left: 0,
-                      right: 5,
+                      right: screenSize.width * 0.025,
                     ),
                     MyButton(
                       onTap: goToSignUp,
                       title: "Create account",
-                      width: 160,
-                      left: 5,
+                      width: screenSize.width * 0.4,
+                      left: screenSize.width * 0.025,
                       right: 0,
                       color: Colors.white,
                       textColor: const Color(0xFF4D8BAA),
@@ -68,55 +74,54 @@ class Login extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: screenSize.height * 0.02,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
+              padding:
+                  EdgeInsets.symmetric(horizontal: screenSize.width * 0.05),
               child: Container(
-                height: 350,
-                width: 350,
-                padding: const EdgeInsets.all(10),
+                height: screenSize.width * 1.0,
+                width: screenSize.width * 1.0,
+                padding: EdgeInsets.all(screenSize.width * 0.025),
                 decoration: BoxDecoration(
                   color: const Color(0xFF4D8BAA),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Image.asset(
-                  'lib/assets/images/test.png',
-                  width: 100,
-                  height: 100,
+                  'assets/images/test.png',
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25),
+            SizedBox(height: screenSize.height * 0.02),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: screenSize.width * 0.05),
               child: Text(
                 'Sign in',
                 style: TextStyle(
-                  color: Color(0xFF4D8BAA),
-                  fontSize: 40,
+                  color: const Color(0xFF4D8BAA),
+                  fontSize: screenSize.width * 0.1,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: screenSize.height * 0.02),
             CustomTextField(
               controller: usernameController,
               hintText: 'Username',
               obscureText: false,
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: screenSize.height * 0.02),
             CustomTextField(
               controller: passwordController,
               hintText: 'Password',
               obscureText: true,
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
+            SizedBox(height: screenSize.height * 0.02),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: screenSize.width * 0.05),
               child: Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
@@ -131,14 +136,18 @@ class Login extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 25),
-            MyButton(
-              onTap: () => signIn(context),
-              title: "Sign in",
-              width: 170,
-              left: 0,
-              right: 25,
-              color: const Color(0xFF4D8BAA),
+            SizedBox(height: screenSize.height * 0.05),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: screenSize.width * 0.05),
+              child: MyButton(
+                onTap: () => signIn(context),
+                title: "Sign in",
+                width: screenSize.width * 0.425,
+                left: 0,
+                right: screenSize.width * 0.05,
+                color: const Color(0xFF4D8BAA),
+              ),
             ),
           ],
         ),

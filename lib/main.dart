@@ -1,8 +1,10 @@
 import 'package:app3/auth/auth_gate.dart';
 import 'package:app3/auth/signup_or_login.dart';
 import 'package:app3/firebase_options.dart';
+import 'package:app3/pages/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'components/input_recipes.dart';
 import 'pages/recipes.dart';
 
 void main() async {
@@ -16,9 +18,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AuthGate(),
+      // home: AuthGate(),
+      home: RecipePage(),
     );
   }
 }
