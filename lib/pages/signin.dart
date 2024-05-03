@@ -1,4 +1,8 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../colors/color_set.dart';
 import '../components/button.dart';
 import '../components/header_text.dart';
@@ -6,62 +10,47 @@ import '../components/text_field.dart';
 import '../services/auth_service.dart';
 import '../styles/box_shadow.dart';
 
-class SignUp extends StatelessWidget {
-  SignUp({super.key, this.goToSignIn});
+class Signin extends StatelessWidget {
+  Signin({super.key, this.goToSignUp});
 
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController fullnameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final void Function()? goToSignIn;
-
-  void signUp(BuildContext context) {
-    // Pass BuildContext as an argument
-    final auth = AuthService();
-
-    //password match -> create user
-    //if (passwordController.text == _confirmPwController.text) {
+  final void Function()? goToSignUp;
+  void signIn(BuildContext context) async {
+    // Your login logic here
+    final authService = AuthService();
     try {
-      auth.signUpWithEmailPassword(
-          emailController.text, passwordController.text);
+      await authService.signInWithEmailPassword(
+          usernameController.text, passwordController.text);
     } catch (e) {
       showDialog(
-        context: context, // Use the provided BuildContext
+        context: context,
         builder: (context) => AlertDialog(
           title: Text(e.toString()),
         ),
       );
     }
   }
-  //password dont match -> show error to user
-  // else {
-  //   showDialog(
-  //     context: context, // Use the provided BuildContext
-  //     builder: (context) => const AlertDialog(
-  //       title: Text("Password don't match!"),
-  //     ),
-  //   );
-  // }
-  //}
 
   @override
   Widget build(BuildContext context) {
+    // final isKeyBoard = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-          backgroundColor: htaPrimaryColors.shade100,
-          body: SafeArea(
-            child: SingleChildScrollView(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            extendBody: true,
+            backgroundColor: htaPrimaryColors.shade100,
+            body: SafeArea(
+                child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // cái ô trắng làm nền cho 2 options Đăng nhập và Đnăg ký
                   Align(
                     alignment: Alignment.topCenter,
                     child: Container(
                         height: 60,
-                        margin:
-                            const EdgeInsets.only(top: 25, left: 25, right: 25),
+                        margin: EdgeInsets.only(top: 25, left: 25, right: 25),
                         decoration: BoxDecoration(
                           boxShadow: [
                             shadow,
@@ -78,36 +67,7 @@ class SignUp extends StatelessWidget {
                                 child: TextButton(
                                   style: ButtonStyle(
                                     minimumSize: MaterialStateProperty.all(
-                                        const Size.fromHeight(50)),
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            htaPrimaryColors.shade50),
-                                    foregroundColor: MaterialStateProperty.all(
-                                        htaPrimaryColors.shade500),
-                                    shape: MaterialStateProperty.resolveWith<
-                                        OutlinedBorder?>(
-                                      (Set<MaterialState> states) {
-                                        return RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  onPressed: goToSignIn,
-                                  child: const Text('Sign in'),
-                                ),
-                              ),
-                            ),
-
-                            // Nút đăng ký
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: TextButton(
-                                  style: ButtonStyle(
-                                    minimumSize: MaterialStateProperty.all(
-                                        const Size.fromHeight(50)),
+                                        Size.fromHeight(50)),
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
                                             htaPrimaryColors.shade500),
@@ -123,11 +83,41 @@ class SignUp extends StatelessWidget {
                                       },
                                     ),
                                   ),
-                                  onPressed: () {
-                                    //
-                                  },
-                                  child: const Text(
+                                  onPressed: null,
+                                  child: Text('Sign in'),
+                                ),
+                              ),
+                            ),
+
+                            // Nút đăng ký
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                    minimumSize: MaterialStateProperty.all(
+                                        Size.fromHeight(50)),
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            htaPrimaryColors.shade50),
+                                    foregroundColor: MaterialStateProperty.all(
+                                        htaPrimaryColors.shade50),
+                                    shape: MaterialStateProperty.resolveWith<
+                                        OutlinedBorder?>(
+                                      (Set<MaterialState> states) {
+                                        return RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  onPressed: goToSignUp,
+                                  child: Text(
                                     'Sign up',
+                                    style: TextStyle(
+                                      color: htaPrimaryColors.shade500,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -136,9 +126,24 @@ class SignUp extends StatelessWidget {
                         )),
                   ),
 
-                  const SizedBox(height: 50),
+                  // SizedBox(
+                  //   height: 25,
+                  // ),
 
-                  // vùng để nhập thông tin đăng ký
+                  // ảnh gì đấy
+                  Container(
+                    height: 400,
+                    padding: EdgeInsets.all(50),
+                    child: Image(
+                      image: AssetImage('assets/images/app_logo_pic.png'),
+                    ),
+                  ),
+
+                  // SizedBox(
+                  //   height: 25,
+                  // ),
+
+                  // vùng để nhập thông tin đăng nhập
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 25, left: 25, right: 25),
@@ -148,32 +153,12 @@ class SignUp extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           // Text
-                          const MyHeaderText(
-                            text: 'Create account',
+                          MyHeaderText(
+                            text: 'Sign in',
                           ),
 
-                          const SizedBox(
+                          SizedBox(
                             height: 10,
-                          ),
-
-                          MyTextField(
-                            controller: fullnameController,
-                            hintText: "Full name",
-                            obscureText: false,
-                          ),
-
-                          const SizedBox(
-                            height: 15,
-                          ),
-
-                          MyTextField(
-                            controller: emailController,
-                            hintText: "Email",
-                            obscureText: false,
-                          ),
-
-                          const SizedBox(
-                            height: 15,
                           ),
 
                           // ô username
@@ -183,7 +168,7 @@ class SignUp extends StatelessWidget {
                             obscureText: false,
                           ),
 
-                          const SizedBox(
+                          SizedBox(
                             height: 15,
                           ),
 
@@ -194,14 +179,25 @@ class SignUp extends StatelessWidget {
                             obscureText: true,
                           ),
 
-                          const SizedBox(
-                            height: 50,
+                          SizedBox(
+                            height: 15,
+                          ),
+
+                          // forgot pass?
+                          Text(
+                            'Forgot password?',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(color: htaPrimaryColors.shade500),
+                          ),
+
+                          SizedBox(
+                            height: 15,
                           ),
 
                           // sign in button
                           MyButton(
-                              onTap: () => signUp(context),
-                              title: 'Sign up',
+                              onTap: () => signIn(context),
+                              title: 'Sign in',
                               width: 200,
                               left: 1,
                               right: 1),
@@ -211,8 +207,6 @@ class SignUp extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          )),
-    );
+            ))));
   }
 }

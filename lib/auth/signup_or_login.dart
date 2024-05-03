@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../pages/login.dart';
+import '../pages/signin.dart';
 import '../pages/signup.dart';
 
 class SignupOrLogin extends StatefulWidget {
@@ -22,12 +22,12 @@ class _SignupOrLoginState extends State<SignupOrLogin> {
   @override
   Widget build(BuildContext context) {
     if (showLoginPage) {
-      return Login(
+      return Signin(
         goToSignUp: togglePages,
       );
     } else {
       return SignUp(
-        goToLogin: togglePages,
+        goToSignIn: togglePages,
       );
     }
   }

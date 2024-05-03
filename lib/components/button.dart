@@ -22,29 +22,26 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Container(
-        height: 60,
-        width: width,
-        padding: const EdgeInsets.all(10),
-        margin: EdgeInsets.fromLTRB(left, 0, right, 0),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: GestureDetector(
-          onTap: onTap,
-          child: Center(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                title,
-                style: TextStyle(
-                  color: textColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+    return Container(
+      height: 60,
+      width: width,
+      padding: const EdgeInsets.all(10),
+      margin: EdgeInsets.fromLTRB(left, 0, right, 0),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Center(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              title,
+              style: TextStyle(
+                color: textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
               ),
             ),
           ),

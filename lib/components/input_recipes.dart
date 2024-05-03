@@ -93,17 +93,17 @@ class InputRecipes extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            CustomTextField(
-              controller: descriptionController,
-              hintText: 'Description',
-              obscureText: false,
-            ),
+            // CustomTextField(
+            //   controller: descriptionController,
+            //   hintText: 'Description',
+            //   obscureText: false,
+            // ),
             const SizedBox(height: 20),
-            CustomTextField(
-              controller: detailController,
-              hintText: 'Detail',
-              obscureText: false,
-            ),
+            // CustomTextField(
+            //   controller: detailController,
+            //   hintText: 'Detail',
+            //   obscureText: false,
+            // ),
             const SizedBox(height: 25),
             Padding(
               padding: const EdgeInsets.all(25.0),

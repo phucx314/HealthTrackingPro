@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import '../styles/box_shadow.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+class MyTextField extends StatelessWidget {
+  const MyTextField({
     super.key,
     required this.controller,
     required this.hintText,
@@ -15,26 +15,26 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 55,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-        child: TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.white),
-              borderRadius: BorderRadius.circular(15.0), // Bo tròn các góc
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.white),
-              borderRadius: BorderRadius.circular(15.0), // Bo tròn các góc
-            ),
-            fillColor: Colors.white,
-            filled: true,
-            hintText: hintText,
+    return Container(
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(15.0), boxShadow: [
+        shadow,
+      ]),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(15.0), // Bo tròn các góc
           ),
-          obscureText: obscureText,
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(15.0), // Bo tròn các góc
+          ),
+          fillColor: Colors.white,
+          filled: true,
+          hintText: hintText,
+          hintStyle: const TextStyle(color: Colors.black38),
         ),
       ),
     );
