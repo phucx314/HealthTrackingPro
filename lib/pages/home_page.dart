@@ -18,7 +18,9 @@ class HomePage extends StatelessWidget {
           IconButton(onPressed: logout, icon: const Icon(Icons.logout))
         ],
       ),
-      body: Image.asset('assets/test.png'),
+      body: const Image(
+        image: AssetImage('assets/images/test.png'),
+      ),
     );
   }
 }

@@ -3,9 +3,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../models/recipe.dart';
 import '../models/newsRecipe.dart';
-import '../pages/recipes.dart';
 import 'button.dart';
-import 'text_field.dart';
 
 class InputRecipes extends StatelessWidget {
   InputRecipes({super.key, this.createRecipe});
