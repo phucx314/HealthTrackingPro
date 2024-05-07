@@ -9,10 +9,9 @@ class RecipesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
-          20, 0, 2, 20), // Add bottom padding to create space between cards
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: Container(
-        width: 165, // Adjust the height of the card
+        width: 160,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
@@ -21,19 +20,17 @@ class RecipesCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 120, // Adjust the height of the image container
+              height: 120,
               decoration: BoxDecoration(
                 color: const Color(0xFF4D8BAA),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Image.asset(
                 recipe.imagePath ?? 'placeholder_image_path.png',
-                fit: BoxFit.cover, // Ensure the image fits within the container
+                fit: BoxFit.cover, // Change fit to BoxFit.fill
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ), // Add space between image and text
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(

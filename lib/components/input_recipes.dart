@@ -1,13 +1,16 @@
+import 'package:app3/services/firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../models/recipe.dart';
 import '../models/newsRecipe.dart';
 import 'button.dart';
+import 'text_field.dart';
 
 class InputRecipes extends StatelessWidget {
   InputRecipes({super.key, this.createRecipe});
-
+  final FirestoreService firestoreService = FirestoreService();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController detailController = TextEditingController();
   String? imagePath;
@@ -37,26 +40,29 @@ class InputRecipes extends StatelessWidget {
     // Perform the creation of a new recipe here
     // Call the createRecipe() function if provided
     // if (createRecipe != null) {
-    Recipe myRecipe = Recipe(
-      description: description,
-      imagePath:
-          imagePath ?? '', // Default to empty string if imagePath is null
-      detail: detail,
-      name: '',
-      dateCreate: DateTime.now(),
-      favorites: false,
-      author: '',
-    );
-    NewsRecipe newsRecipe = NewsRecipe();
-    newsRecipe.addRecipe(myRecipe);
+    //   Recipe myRecipe = Recipe(
+    //     description: description,
+    //     imagePath: imagePath ?? '',
+    //     detail: detail,
+    //     name: '',
+    //     dateCreate: DateTime.now(),
+    //     favorites: false,
+    //     author: '',
+    //   );
+    //   NewsRecipe newsRecipe = NewsRecipe();
+    //   newsRecipe.addRecipe(myRecipe);
 
-    // Pop until reaching the recipes page
-    Navigator.of(context)
-        .popUntil((route) => route.settings.name == '/recipes');
-    print("Object created successfully");
+    //   // Đóng màn hình hiện tại và quay lại màn hình trước đó
+    //   Navigator.of(context).pop();
+    //   print("Object created successfully");
     // } else {
-    // print("createRecipe callback is null");
+    //   print("createRecipe callback is null");
     // }
+
+    firestoreService.addRecipe(description, imagePath!, detail, "null",
+        DateTime.now(), false, "author");
+
+    Navigator.pop(context);
   }
 
   @override
@@ -91,17 +97,23 @@ class InputRecipes extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            // CustomTextField(
-            //   controller: descriptionController,
-            //   hintText: 'Description',
-            //   obscureText: false,
-            // ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+              child: MyTextField(
+                controller: descriptionController,
+                hintText: 'Description',
+                obscureText: false,
+              ),
+            ),
             const SizedBox(height: 20),
-            // CustomTextField(
-            //   controller: detailController,
-            //   hintText: 'Detail',
-            //   obscureText: false,
-            // ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+              child: MyTextField(
+                controller: detailController,
+                hintText: 'Detail',
+                obscureText: false,
+              ),
+            ),
             const SizedBox(height: 25),
             Padding(
               padding: const EdgeInsets.all(25.0),

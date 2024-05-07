@@ -26,11 +26,14 @@ class SignUp extends StatelessWidget {
           emailController.text, passwordController.text);
     } catch (e) {
       showDialog(
-        context: context, // Use the provided BuildContext
-        builder: (context) => AlertDialog(
-          title: Text(e.toString()),
-        ),
-      );
+          // context: context, // Use the provided BuildContext
+          // builder: (context) => AlertDialog(
+          //   title: Text(e.toString()),
+          // ),
+          context: context,
+          builder: (context) => const AlertDialog(
+                title: Text("Please fill all your information"),
+              ));
     }
   }
   //password dont match -> show error to user

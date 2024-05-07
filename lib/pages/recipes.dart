@@ -1,7 +1,12 @@
+import 'package:app3/components/appbar.dart';
 import 'package:app3/models/newsRecipe.dart'; // Adjust import if needed
+import 'package:app3/models/recipe.dart';
 import 'package:app3/services/auth_service.dart';
+import 'package:app3/services/firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../colors/color_set.dart';
 import '../components/button.dart';
 import '../components/input_recipes.dart';
 import '../components/recipes_card.dart';
@@ -11,192 +16,192 @@ class RecipePage extends StatelessWidget {
 
   final void Function()? createNewRecipe;
   final NewsRecipe newsRecipe = NewsRecipe(); // Initialize NewsRecipe
+
   void openDashboard(BuildContext context) {
     final auth = AuthService();
     auth.signOut();
   }
 
-  Widget buildIconButton(
-      IconData icon, VoidCallback onPressed, String tooltip) {
-    return IconButton(
-      onPressed: onPressed,
-      icon: Icon(icon),
-      iconSize: 30,
-      color: const Color(0xFF4D8BAA),
-      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-      tooltip: tooltip,
-    );
-  }
+  final FirestoreService firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFE9F0F5),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 80),
-            Row(
-              children: [
-                buildIconButton(
-                    Icons.menu, () => openDashboard(context), "Menu"),
-                const SizedBox(width: 10),
-                Container(
-                  constraints: const BoxConstraints(maxWidth: 220),
-                  height: 60,
-                  width: 220,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF4D8BAA),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      const Text(
-                        "Hi, Rosser",
-                        style: TextStyle(
-                          color: Color(0xFF4D8BAA),
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 10),
-                buildIconButton(Icons.notifications,
-                    () => openDashboard(context), "Notifications"),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 25), // Adjust padding for the entire container
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.all(0), // Adjust padding for the row
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () => openDashboard(context),
-                            icon: const Icon(Icons.info),
-                            iconSize: 25,
-                            color: const Color(0xFF4D8BAA),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: htaPrimaryColors.shade100,
+        body: SafeArea(
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.fromLTRB(15, 25, 15, 25),
+                child: MyAppBar(username: "Rosser"),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            "Recipes",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(0),
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () => openDashboard(context),
+                                      icon: const Icon(Icons.info),
+                                      iconSize: 25,
+                                      color: const Color(0xFF4D8BAA),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    const Text(
+                                      "Recipes",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                                child: Text(
+                                  "Elevate your cooking game with our recipes function! Explore a variety of delicious dishes, perfect for any occasion. From simple meals to gourmet creations, discover endless culinary inspiration at your fingertips.",
+                                  style: TextStyle(
+                                    color: Color(0xFF4D8BAA),
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                MyButton(
+                                  onTap: () {
+                                    // Handle Discover button tap
+                                  },
+                                  title: "Discover",
+                                  width: 150,
+                                  left: 0,
+                                  right: 25,
+                                ),
+                                MyButton(
+                                  onTap: () {
+                                    // Handle Favorites button tap
+                                  },
+                                  title: "Favorites",
+                                  width: 150,
+                                  left: 25,
+                                  right: 0,
+                                  color: Colors.white,
+                                  textColor: const Color(0xFF4D8BAA),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          25, 0, 25, 0), // Adjust padding for the text
-                      child: Text(
-                        "Elevate your cooking game with our recipes function! Explore a variety of delicious dishes, perfect for any occasion. From simple meals to gourmet creations, discover endless culinary inspiration at your fingertips.",
-                        style: TextStyle(
-                          color: Color(0xFF4D8BAA),
-                          fontSize: 13,
                         ),
-                      ),
+                        // Display RecipesCards from newsRecipe
+                        Wrap(
+                          spacing: 10, // Khoảng cách giữa các thẻ
+                          runSpacing: 10, // Khoảng cách giữa các dòng
+                          children: [
+                            StreamBuilder<QuerySnapshot>(
+                              stream: firestoreService.getRecipesStream(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  List<QueryDocumentSnapshot> recipesList =
+                                      snapshot.data!.docs;
+
+                                  return Wrap(
+                                    spacing: 0,
+                                    runSpacing: 10,
+                                    children: recipesList.map((document) {
+                                      Recipe recipe = Recipe(
+                                        description: document['description'],
+                                        imagePath: document['imagePath'],
+                                        detail: document['detail'],
+                                        name: document['name'],
+                                        dateCreate:
+                                            document['dateCreate'].toDate(),
+                                        favorites: document['favorites'],
+                                        author: document['author'],
+                                      );
+
+                                      return RecipesCard(recipe: recipe);
+                                    }).toList(),
+                                  );
+                                } else {
+                                  return const CircularProgressIndicator();
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Container(
+                            alignment: Alignment.bottomRight,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .end, // Đảm bảo các thành phần trong hàng được căn phải
+                              children: [
+                                MyButton(
+                                  onTap: () {
+                                    //su dung cai nay de den voi trang dang gap loi
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => InputRecipes(),
+                                      ),
+                                    );
+                                    // su dung newsRecipe cai nay chi de tesst
+                                    // newsRecipe
+                                    //     .addRecipesToFirestore(newsRecipe.menu);
+                                  },
+                                  title: "New recipe",
+                                  width: screenSize.width * 0.425,
+                                  left: 0,
+                                  right:
+                                      0, // Đặt khoảng cách bên phải là 0 để nút nằm bên phải
+                                  color: const Color(0xFF4D8BAA),
+                                  borderRadius: 30,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 20),
-                  ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(screenSize.width * 0.05),
-              child: Container(
-                padding: EdgeInsets.fromLTRB(
-                    screenSize.width * 0.02,
-                    screenSize.width * 0.02,
-                    screenSize.width * 0.01,
-                    screenSize.width * 0.02),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MyButton(
-                      onTap: null,
-                      title: "Discover",
-                      width: screenSize.width * 0.4,
-                      left: 0,
-                      right: screenSize.width * 0.025,
-                    ),
-                    MyButton(
-                      onTap: null,
-                      title: "Favorites",
-                      width: screenSize.width * 0.4,
-                      left: screenSize.width * 0.025,
-                      right: 0,
-                      color: Colors.white,
-                      textColor: const Color(0xFF4D8BAA),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            // Display RecipesCards from newsRecipe
-            Wrap(
-              spacing: 20,
-              runSpacing: 20,
-              children: newsRecipe.menu
-                  .map((recipe) => RecipesCard(recipe: recipe))
-                  .toList(),
-            ),
-            Container(
-              alignment: Alignment.bottomRight,
-              child: MyButton(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => InputRecipes(),
-                    ),
-                  );
-                },
-                title: "New recipe",
-                width: screenSize.width * 0.425,
-                left: 0,
-                right: screenSize.width * 0.05,
-                color: const Color(0xFF4D8BAA),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

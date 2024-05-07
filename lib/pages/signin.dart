@@ -22,11 +22,15 @@ class Signin extends StatelessWidget {
           usernameController.text, passwordController.text);
     } catch (e) {
       showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(e.toString()),
-        ),
-      );
+          // context: context,
+          // builder: (context) => AlertDialog(
+          //   title: Text(e.toString()),
+          // ),
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("Please enter your user name and password!"),
+              )
+              );
     }
   }
 

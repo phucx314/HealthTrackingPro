@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
@@ -9,8 +10,10 @@ class MyButton extends StatelessWidget {
     required this.left,
     required this.right,
     this.color = const Color(0xFF4D8BAA),
-    this.textColor = Colors.white, // Default value for textColor
-  });
+    this.textColor = Colors.white,
+    this.borderRadius = 15,
+    this.icon, // Changed from Icon to Icon?
+  }); // Added super constructor call
 
   final Function()? onTap;
   final String title;
@@ -18,7 +21,9 @@ class MyButton extends StatelessWidget {
   final double left;
   final double right;
   final Color color;
-  final Color textColor; // Not nullable anymore
+  final Color textColor;
+  final double borderRadius;
+  final Icon? icon; // Changed type to Icon?
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +34,15 @@ class MyButton extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(left, 0, right, 0),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: GestureDetector(
         onTap: onTap,
-        child: Center(
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Add some space between icon and text
+            Text(
               title,
               style: TextStyle(
                 color: textColor,
@@ -44,7 +50,15 @@ class MyButton extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-          ),
+            const SizedBox(
+              width: 10,
+            ),
+            if (icon != null) // Add a check for null icon
+              Icon(
+                icon!.icon,
+                color: color,
+              ), // Add Icon here
+          ],
         ),
       ),
     );
