@@ -1,20 +1,16 @@
-class Recipe {
+class Plan {
   final String id;
   final String description; //
   final String imagePath; // lib/image/..
-  final String detail; //
-  final String name; //
+  final String timeFund; //
+  final String status; //
   final DateTime dateCreate;
-  final bool favorites;
-  final String author;
-  Recipe({
+  Plan({
     required this.id,
     required this.description,
     required this.imagePath,
-    required this.detail,
-    required this.name,
+    required this.timeFund,
+    required this.status,
     required this.dateCreate,
-    required this.favorites,
-    required this.author,
   });
 }

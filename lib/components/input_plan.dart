@@ -6,23 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import '../models/plan.dart';
 import '../models/recipe.dart';
 import '../models/newsRecipe.dart';
 import '../styles/box_shadow.dart';
 import 'button.dart';
 import 'text_field.dart';
 
-class InputRecipes extends StatelessWidget {
-  InputRecipes({super.key, this.createRecipe, this.recipeId});
+class Inputplans extends StatelessWidget {
+  Inputplans({super.key, this.createPlan, this.planId});
   final FirestoreService firestoreService = FirestoreService();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController detailController = TextEditingController();
+  final TextEditingController timeFundController = TextEditingController();
   final TextEditingController idController = TextEditingController();
   String? imagePath;
-  final String? recipeId;
-  final VoidCallback? createRecipe;
+  final String? planId;
+  final VoidCallback? createPlan;
   final CollectionReference _reference =
-      FirebaseFirestore.instance.collection('recipes');
+      FirebaseFirestore.instance.collection('plans');
   String imageUrl = '';
 
   Future<void> _pickImage() async {
@@ -55,29 +56,7 @@ class InputRecipes extends StatelessWidget {
     }
   }
 
-  void _onBackPressed(BuildContext context) {
-    Navigator.of(context).pop();
-  }
-
-  Future<void> _createRecipe(BuildContext context) async {
-    // Get values from controllers and image path
-    final String description = descriptionController.text;
-    final String detail = detailController.text;
-    final String id = idController.text;
-
-    if (imageUrl.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please upload an image')));
-      return;
-    }
-
-    await firestoreService.addRecipe(id, description, imageUrl, detail, "null",
-        DateTime.now(), false, "author");
-
-    Navigator.pop(context);
-  }
-
-  void _deleteRecipe(BuildContext context, String id) {
+  void _deletePlan(BuildContext context, String id) {
     // Đảm bảo rằng recipeId không null trước khi xóa
     if (id.isNotEmpty) {
       // Xác nhận xóa
@@ -96,16 +75,8 @@ class InputRecipes extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  firestoreService.deleteRecipe(id);
-                  Navigator.pop(context);
-                  // Thông báo khi AlertDialog đã đóng và điều hướng trở lại trang PlanPage
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Recipe deleted'),
-                    ),
-                  );
-                  // Điều hướng trở lại trang PlanPage
-                  Navigator.pop(context);
+                  firestoreService.deletePlan(id);
+                  Navigator.pop(context); // Đóng hộp thoại
                 },
                 child: const Text("Delete"),
               ),
@@ -114,33 +85,47 @@ class InputRecipes extends StatelessWidget {
         },
       );
     }
+    Navigator.pop(context);
   }
 
-  void _editRecipe(BuildContext context) {
-    // Điều hướng đến màn hình sửa
-    // Ví dụ:
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => EditRecipeScreen()),
-    // );
+  void _onBackPressed(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _createRecipe(BuildContext context) async {
+    // Get values from controllers and image path
+    final String description = descriptionController.text;
+    final String timeFund = timeFundController.text;
+    final String id = idController.text;
+
+    if (imageUrl.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please upload an image')));
+      return;
+    }
+
+    await firestoreService.addPlan(
+        id, description, imageUrl, timeFund, "status", DateTime.now());
+
+    Navigator.pop(context);
   }
 
   Future<void> _getRecipeById() async {
-    idController.text = recipeId!;
+    idController.text = planId!;
 
-    Recipe recipe;
-    await firestoreService.getRecipe(idController.text).then((value) {
-      recipe = value;
-      descriptionController.text = recipe.description;
-      detailController.text = recipe.detail;
-      imageUrl = recipe.imagePath;
+    Plan plan;
+    await firestoreService.getPlan(idController.text).then((value) {
+      plan = value;
+      descriptionController.text = plan.description;
+      timeFundController.text = plan.timeFund;
+      imageUrl = plan.imagePath;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    if (recipeId != null) {
+    if (planId != null) {
       _getRecipeById();
     }
     return Scaffold(
@@ -160,7 +145,7 @@ class InputRecipes extends StatelessWidget {
                 child: const Padding(
                   padding: EdgeInsets.all(20.0),
                   child: Text(
-                    "Create new recipe!",
+                    "Create new plan!",
                     style: TextStyle(
                       fontSize: 40,
                       color: Color(0xFF4D8BAA),
@@ -201,11 +186,11 @@ class InputRecipes extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: TextField(
-                    controller: detailController,
+                    controller: timeFundController,
                     maxLines: null,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Detail',
+                      hintText: 'Time-Fund',
                       hintStyle: TextStyle(color: Colors.black38),
                     ),
                   ),
@@ -259,8 +244,7 @@ class InputRecipes extends StatelessWidget {
                     ),
                     const Spacer(),
                     IconButton(
-                      onPressed: () =>
-                          _deleteRecipe(context, idController.text),
+                      onPressed: () => _deletePlan(context, idController.text),
                       icon: const Icon(
                         Icons.delete,
                         color: Color(0xFF4D8BAA),

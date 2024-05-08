@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class NewsRecipe {
   final List<Recipe> _menu = [
     Recipe(
+      id: "1",
       description: "Gain weight faster",
       imagePath: "assets/images/test.png",
       detail: "Hearty morning delight with eggs, sausage, cheese, and veggies.",
@@ -14,6 +15,7 @@ class NewsRecipe {
       author: "Dat",
     ),
     Recipe(
+      id: "2",
       description: "Gain weight faster",
       imagePath: "assets/images/app_logo_pic.png",
       detail: "Hearty morning delight with eggs, sausage, cheese, and veggies.",
@@ -23,6 +25,7 @@ class NewsRecipe {
       author: "Dat",
     ),
     Recipe(
+      id: "3",
       description: "Gain weight faster",
       imagePath: "assets/images/test.png",
       detail: "Hearty morning delight with eggs, sausage, cheese, and veggies.",
@@ -46,24 +49,5 @@ class NewsRecipe {
     if (index >= 0 && index < _menu.length) {
       _menu.removeAt(index);
     }
-  }
-
-  void addRecipesToFirestore(List<Recipe> recipes) async {
-    // Lấy tham chiếu của collection "recipes"
-    CollectionReference recipesCollection =
-        FirebaseFirestore.instance.collection('recipes');
-
-    // Lặp qua danh sách các công thức và thêm chúng vào Firestore
-    recipes.forEach((recipe) async {
-      await recipesCollection.add({
-        'description': recipe.description,
-        'imagePath': recipe.imagePath,
-        'detail': recipe.detail,
-        'name': recipe.name,
-        'dateCreate': recipe.dateCreate,
-        'favorites': recipe.favorites,
-        'author': recipe.author,
-      });
-    });
   }
 }

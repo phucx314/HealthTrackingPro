@@ -1,6 +1,8 @@
 import 'package:app3/components/appbar.dart';
+import 'package:app3/components/planCard.dart';
 import 'package:app3/components/sidebar.dart';
 import 'package:app3/models/newsRecipe.dart'; // Adjust import if needed
+import 'package:app3/models/plan.dart';
 import 'package:app3/models/recipe.dart';
 import 'package:app3/services/auth_service.dart';
 import 'package:app3/services/firestore.dart';
@@ -9,31 +11,19 @@ import 'package:flutter/material.dart';
 
 import '../colors/color_set.dart';
 import '../components/button.dart';
+import '../components/input_plan.dart';
 import '../components/input_recipes.dart';
 import '../components/recipes_card.dart';
 
-class RecipePage extends StatelessWidget {
-  RecipePage({super.key, this.createNewRecipe, this.goToPlan});
-  final void Function()? goToPlan;
-  final void Function()? createNewRecipe;
-  final NewsRecipe newsRecipe = NewsRecipe(); // Initialize NewsRecipe
-
+class PlanPage extends StatelessWidget {
+  PlanPage({super.key, this.createNewPlan, this.goToRecipe});
+  final FirestoreService firestoreService = FirestoreService();
+  final void Function()? createNewPlan;
+  final void Function()? goToRecipe;
   void openDashboard(BuildContext context) {
     final auth = AuthService();
     auth.signOut();
   }
-
-  // Trong trang chính (Home page) sau khi người dùng nhấn vào một Recipe Card
-  void _navigateToInputRecipes(BuildContext context, String recipeId) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => InputRecipes(recipeId: recipeId),
-      ),
-    );
-  }
-
-  final FirestoreService firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -64,23 +54,23 @@ class RecipePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         MyButton(
-                          onTap: () {
-                            // Handle Discover button tap
-                          },
+                          onTap: goToRecipe,
                           title: "Recipes",
                           width: 170,
                           left: 0,
                           right: 5,
+                          color: Colors.white,
+                          textColor: const Color(0xFF4D8BAA),
                           borderRadius: 10,
                         ),
                         MyButton(
-                          onTap: goToPlan,
+                          onTap: () {
+                            // Handle Favorites button tap
+                          },
                           title: "Plan",
                           width: 170,
                           left: 5,
                           right: 0,
-                          color: Colors.white,
-                          textColor: const Color(0xFF4D8BAA),
                           borderRadius: 10,
                         ),
                       ],
@@ -123,7 +113,7 @@ class RecipePage extends StatelessWidget {
                                             ),
                                             const SizedBox(width: 10),
                                             const Text(
-                                              "Recipes",
+                                              "Find a plan",
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 20,
@@ -137,7 +127,7 @@ class RecipePage extends StatelessWidget {
                                         padding:
                                             EdgeInsets.fromLTRB(25, 0, 25, 0),
                                         child: Text(
-                                          "Elevate your cooking game with our recipes function! Explore a variety of delicious dishes, perfect for any occasion. From simple meals to gourmet creations, discover endless culinary inspiration at your fingertips.",
+                                          "Meal plans, workout plans, and more. Start a plan, follow along, and reach your goals.",
                                           style: TextStyle(
                                             color: Color(0xFF4D8BAA),
                                             fontSize: 13,
@@ -150,29 +140,27 @@ class RecipePage extends StatelessWidget {
                                 ),
                               ),
                               StreamBuilder<QuerySnapshot>(
-                                stream: firestoreService.getRecipesStream(),
+                                stream: firestoreService.getPlansStream(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    List<QueryDocumentSnapshot> recipesList =
+                                    List<QueryDocumentSnapshot> plansList =
                                         snapshot.data!.docs;
 
                                     return Wrap(
                                       spacing: 0,
                                       runSpacing: 10,
-                                      children: recipesList.map((document) {
-                                        Recipe recipe = Recipe(
+                                      children: plansList.map((document) {
+                                        Plan plan = Plan(
                                           id: document['id'],
                                           description: document['description'],
                                           imagePath: document['imagePath'],
-                                          detail: document['detail'],
-                                          name: document['name'],
+                                          timeFund: document['timeFund'],
+                                          status: document['status'],
                                           dateCreate:
                                               document['dateCreate'].toDate(),
-                                          favorites: document['favorites'],
-                                          author: document['author'],
                                         );
 
-                                        return RecipesCard(recipe: recipe);
+                                        return PlanCard(plan: plan);
                                       }).toList(),
                                     );
                                   } else {
@@ -196,14 +184,14 @@ class RecipePage extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => InputRecipes(),
+                                          builder: (context) => Inputplans(),
                                         ),
                                       );
                                       // su dung newsRecipe cai nay chi de tesst
                                       // newsRecipe
                                       //     .addRecipesToFirestore(newsRecipe.menu);
                                     },
-                                    title: "New recipe",
+                                    title: "New plan",
                                     width: screenSize.width * 0.425,
                                     left: 0,
                                     right:

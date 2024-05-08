@@ -31,7 +31,7 @@ class MyButton extends StatelessWidget {
       height: 60,
       width: width,
       padding: const EdgeInsets.all(10),
-      margin: EdgeInsets.fromLTRB(left, 0, right, 0),
+      margin: EdgeInsets.fromLTRB(left, 5, right, 5),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(borderRadius),

@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'healthtrackingapp-a8aa8.appspot.com',
     iosBundleId: 'com.example.app3',
   );
+
 }

@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../colors/color_set.dart';
 import '../components/appbar.dart';
 import '../components/feature.dart';
+import '../components/sidebar.dart';
 import '../components/tip_ball.dart';
 import '../components/water_intake.dart';
 import '../models/tip_ball.dart';
@@ -17,6 +20,7 @@ class Dashboard extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        drawer: Sidebar(),
         backgroundColor: htaPrimaryColors.shade100,
         body: SafeArea(
           child: Column(

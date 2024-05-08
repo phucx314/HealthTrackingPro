@@ -1,19 +1,18 @@
+import 'package:app3/components/input_plan.dart';
 import 'package:flutter/material.dart';
-import 'package:app3/models/recipe.dart';
-
+import 'package:app3/models/plan.dart';
 import 'input_recipes.dart';
 
-class RecipesCard extends StatelessWidget {
-  final Recipe recipe;
+class PlanCard extends StatelessWidget {
+  final Plan plan;
 
-  const RecipesCard({super.key, required this.recipe});
+  const PlanCard({super.key, required this.plan});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: Container(
-        width: 160,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
@@ -32,8 +31,9 @@ class RecipesCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: Image.network(
-                      recipe.imagePath ?? 'placeholder_image_path.png',
-                      fit: BoxFit.fill,
+                      plan.imagePath ?? 'placeholder_image_path.png',
+                      fit: BoxFit.cover,
+                      width: double.infinity,
                     ),
                   ),
                 ),
@@ -44,17 +44,15 @@ class RecipesCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        recipe.description ?? 'No description available',
+                        plan.description ?? 'No description available',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
-                        maxLines: 1, // Giới hạn số dòng
-                        overflow: TextOverflow
-                            .ellipsis, // Hiển thị dấu "..." nếu vượt quá
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 5),
-                      _buildDetailText(recipe.detail),
+                      _buildDetailText(plan.timeFund),
                       _buildIconButton(context),
                     ],
                   ),
@@ -73,9 +71,8 @@ class RecipesCard extends StatelessWidget {
       style: const TextStyle(
         color: Colors.black,
       ),
-      maxLines: 3, // Giới hạn số dòng
-      overflow:
-          TextOverflow.ellipsis, // Hiển thị dấu "..." khi vượt quá số dòng
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
     );
 
     return LayoutBuilder(
@@ -88,7 +85,7 @@ class RecipesCard extends StatelessWidget {
         );
         final textPainter = TextPainter(
           text: textSpan,
-          maxLines: 3, // Giới hạn số dòng
+          maxLines: 3,
           textDirection: TextDirection.ltr,
         );
         textPainter.layout(maxWidth: constraints.maxWidth);
@@ -115,20 +112,18 @@ class RecipesCard extends StatelessWidget {
         alignment: Alignment.topRight,
         child: IconButton(
           onPressed: () {
-            // Xử lý khi nhấn vào IconButton
-
-            String id = recipe.id;
+            String id = plan.id;
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputRecipes(
-                  recipeId: id,
+                builder: (context) => Inputplans(
+                  planId: id,
                 ),
               ),
             );
           },
           icon: const Icon(
-            Icons.more_horiz, // Icon thích hợp có thể thay đổi
+            Icons.more_horiz,
             color: Color(0xFF4D8BAA),
           ),
         ),
