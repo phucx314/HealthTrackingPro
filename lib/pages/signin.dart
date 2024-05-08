@@ -29,8 +29,7 @@ class Signin extends StatelessWidget {
           context: context,
           builder: (context) => AlertDialog(
                 title: Text("Please enter your user name and password!"),
-              )
-              );
+              ));
     }
   }
 
@@ -44,7 +43,6 @@ class Signin extends StatelessWidget {
             extendBody: true,
             backgroundColor: htaPrimaryColors.shade100,
             body: SafeArea(
-                child: SingleChildScrollView(
               child: Column(
                 children: [
                   // cái ô trắng làm nền cho 2 options Đăng nhập và Đnăg ký
@@ -209,6 +207,6 @@ class Signin extends StatelessWidget {
                   ),
                 ],
               ),
-            ))));
+            )));
   }
 }
