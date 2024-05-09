@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:app3/auth/plan_or_recipes.dart';
 import 'package:app3/models/plan.dart';
 import 'package:app3/pages/planpage.dart';
 import 'package:app3/pages/recipes.dart';
@@ -12,10 +13,11 @@ import '../pages/dashboard.dart';
 import '../pages/my_account.dart';
 
 import '../pages/dashboard.dart';
+import '../services/auth_service.dart';
 
 class Sidebar extends StatelessWidget {
-  const Sidebar({super.key});
-
+  Sidebar({super.key});
+  final auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -114,7 +116,7 @@ class Sidebar extends StatelessWidget {
                   SidebarItem(
                     name: 'Log out',
                     icon: Icons.logout,
-                    onTap: () => onItemTap(context, index: 7),
+                    onTap: () => {auth.signOut()},
                   ),
                   SizedBox(
                     height: 15,
@@ -151,11 +153,11 @@ class Sidebar extends StatelessWidget {
         break;
       case 1:
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PlanPage()));
+            context, MaterialPageRoute(builder: (context) => PlanOrRecipe()));
         break;
       case 2:
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => RecipePage()));
+            context, MaterialPageRoute(builder: (context) => PlanOrRecipe()));
         break;
       // case 3: Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard())); break;
       case 4:

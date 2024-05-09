@@ -41,7 +41,7 @@ class TipBall extends StatelessWidget {
         ),
 
         // tên tip
-        Text(tip.username),
+        Text(tip.description),
       ],
     );
   }

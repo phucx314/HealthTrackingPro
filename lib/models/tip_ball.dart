@@ -1,13 +1,15 @@
 class Tip {
   final String imageUrl;
+  final String description;
+  final String content;
   final String emoji;
-  final String username;
-  final DateTime time;
+  final String uid;
 
   Tip({
-    required this.imageUrl,
     required this.emoji,
-    required this.username,
-    required this.time,
+    required this.imageUrl,
+    required this.description,
+    required this.content,
+    required this.uid,
   });
 }

@@ -43,7 +43,7 @@ class RecipePage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: htaPrimaryColors.shade100,
-        drawer: const Sidebar(),
+        drawer: Sidebar(),
         body: SafeArea(
           child: Column(
             children: [

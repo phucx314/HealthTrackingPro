@@ -48,8 +48,9 @@ class Dashboard extends StatelessWidget {
                                 tip: Tip(
                                   imageUrl: 'https://picsum.photos/250?image=9',
                                   emoji: '😏',
-                                  time: DateTime(2000),
-                                  username: 'Đoán xem',
+                                  content: "",
+                                  description: 'Đoán xem',
+                                  uid: "",
                                 ),
                               ),
                               SizedBox(
@@ -59,8 +60,9 @@ class Dashboard extends StatelessWidget {
                                 tip: Tip(
                                   imageUrl: 'https://picsum.photos/250?image=9',
                                   emoji: '😏',
-                                  time: DateTime(2000),
-                                  username: 'Đoán xem',
+                                  content: "",
+                                  description: 'Đoán xem',
+                                  uid: "",
                                 ),
                               ),
                               SizedBox(
@@ -70,8 +72,9 @@ class Dashboard extends StatelessWidget {
                                 tip: Tip(
                                   imageUrl: 'https://picsum.photos/250?image=9',
                                   emoji: '😏',
-                                  time: DateTime(2000),
-                                  username: 'Đoán xem',
+                                  content: "",
+                                  description: 'Đoán xem',
+                                  uid: "",
                                 ),
                               ),
                               SizedBox(
@@ -81,8 +84,9 @@ class Dashboard extends StatelessWidget {
                                 tip: Tip(
                                   imageUrl: 'https://picsum.photos/250?image=9',
                                   emoji: '😏',
-                                  time: DateTime(2000),
-                                  username: 'Đoán xem',
+                                  content: "",
+                                  description: 'Đoán xem',
+                                  uid: "",
                                 ),
                               ),
                               SizedBox(
@@ -92,8 +96,9 @@ class Dashboard extends StatelessWidget {
                                 tip: Tip(
                                   imageUrl: 'https://picsum.photos/250?image=9',
                                   emoji: '😏',
-                                  time: DateTime(2000),
-                                  username: 'Đoán xem',
+                                  content: "",
+                                  description: 'Đoán xem',
+                                  uid: "",
                                 ),
                               ),
                               SizedBox(
@@ -103,8 +108,9 @@ class Dashboard extends StatelessWidget {
                                 tip: Tip(
                                   imageUrl: 'https://picsum.photos/250?image=9',
                                   emoji: '😏',
-                                  time: DateTime(2000),
-                                  username: 'Đoán xem',
+                                  content: "",
+                                  description: 'Đoán xem',
+                                  uid: "",
                                 ),
                               ),
                               SizedBox(
@@ -114,8 +120,9 @@ class Dashboard extends StatelessWidget {
                                 tip: Tip(
                                   imageUrl: 'https://picsum.photos/250?image=9',
                                   emoji: '😏',
-                                  time: DateTime(2000),
-                                  username: 'Đoán xem',
+                                  content: "",
+                                  description: 'Đoán xem',
+                                  uid: "",
                                 ),
                               ),
                             ],

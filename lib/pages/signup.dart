@@ -9,7 +9,8 @@ import '../styles/box_shadow.dart';
 class SignUp extends StatelessWidget {
   SignUp({super.key, this.goToSignIn});
 
-  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController fullnameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -20,32 +21,32 @@ class SignUp extends StatelessWidget {
     final auth = AuthService();
 
     //password match -> create user
-    //if (passwordController.text == _confirmPwController.text) {
-    try {
-      auth.signUpWithEmailPassword(
-          emailController.text, passwordController.text);
-    } catch (e) {
+    if (passwordController.text == confirmPasswordController.text) {
+      try {
+        auth.signUpWithEmailPassword(emailController.text,
+            passwordController.text, fullnameController.text);
+      } catch (e) {
+        showDialog(
+            // context: context, // Use the provided BuildContext
+            // builder: (context) => AlertDialog(
+            //   title: Text(e.toString()),
+            // ),
+            context: context,
+            builder: (context) => const AlertDialog(
+                  title: Text("Please fill all your information"),
+                ));
+      }
+    }
+    //password dont match -> show error to user
+    else {
       showDialog(
-          // context: context, // Use the provided BuildContext
-          // builder: (context) => AlertDialog(
-          //   title: Text(e.toString()),
-          // ),
-          context: context,
-          builder: (context) => const AlertDialog(
-                title: Text("Please fill all your information"),
-              ));
+        context: context, // Use the provided BuildContext
+        builder: (context) => const AlertDialog(
+          title: Text("Password don't match!"),
+        ),
+      );
     }
   }
-  //password dont match -> show error to user
-  // else {
-  //   showDialog(
-  //     context: context, // Use the provided BuildContext
-  //     builder: (context) => const AlertDialog(
-  //       title: Text("Password don't match!"),
-  //     ),
-  //   );
-  // }
-  //}
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,6 @@ class SignUp extends StatelessWidget {
           backgroundColor: htaPrimaryColors.shade100,
           body: SafeArea(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // cái ô trắng làm nền cho 2 options Đăng nhập và Đnăg ký
                 Align(
@@ -135,15 +135,15 @@ class SignUp extends StatelessWidget {
                         ],
                       )),
                 ),
-
-                const SizedBox(height: 50),
-
+                const SizedBox(
+                  height: 100,
+                ),
                 // vùng để nhập thông tin đăng ký
                 Padding(
                   padding:
                       const EdgeInsets.only(bottom: 25, left: 25, right: 25),
                   child: Align(
-                    alignment: Alignment.bottomCenter,
+                    alignment: Alignment.topCenter,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -178,8 +178,8 @@ class SignUp extends StatelessWidget {
 
                         // ô username
                         MyTextField(
-                          controller: usernameController,
-                          hintText: "Your username",
+                          controller: passwordController,
+                          hintText: "Password",
                           obscureText: false,
                         ),
 
@@ -189,8 +189,8 @@ class SignUp extends StatelessWidget {
 
                         // ô pass
                         MyTextField(
-                          controller: passwordController,
-                          hintText: "Your password",
+                          controller: confirmPasswordController,
+                          hintText: "Confirm password",
                           obscureText: true,
                         ),
 
